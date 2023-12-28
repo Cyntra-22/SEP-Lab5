@@ -16,6 +16,16 @@ class Disk(object):
     def showdisk(self):
         # using turtle to draw a disk
         turtle.penup()
+        turtle.goto(self.xpos, self.ypos)
+        turtle.pendown()
+        turtle.pensize(3)
+        for i in range(2):
+            turtle.forward(self.width/2)
+            turtle.left(90)
+            turtle.forward(self.height)
+            turtle.left(90)
+            turtle.forward(self.width/2)
+        turtle.penup()
 
     def newpos(self, xpos, ypos):
         self.xpos = xpos
@@ -24,28 +34,59 @@ class Disk(object):
     def cleardisk(self):
         # using turtle to clear a disk
         turtle.penup()
-
+        turtle.goto(self.xpos, self.ypos)
+        turtle.pendown()
+        turtle.pensize(3)
+        turtle.pencolor("white")
+        for i in range(2):
+            turtle.forward(self.width/2)
+            turtle.left(90)
+            turtle.forward(self.height)
+            turtle.left(90)
+            turtle.forward(self.width/2)
+        turtle.penup()
+        turtle.pencolor("black")
 
 class Pole(object):
     def __init__(self, name="", xpos=0, ypos=0, thick=10, lenght=100):
         self.name = name
-        self.xpos = xpos
-        self.ypos = ypos
-        self.thick = thick
-        self.lenght = lenght
+        self.stack = []
+        self.toppos = 0
+        self.pxpos = xpos
+        self.pypos = ypos
+        self.pthick = thick
+        self.plenght = lenght
 
     def showpole(self):
         # using turtle to draw a pole
         turtle.penup()
+        turtle.goto(self.pxpos, self.pypos)
+        turtle.pendown()
+        turtle.pensize(self.pthick)
+        turtle.pencolor("black")
+        turtle.left(90)
+        turtle.forward(self.plenght)
+        turtle.right(90)
+        turtle.penup()
+        turtle.goto(self.pxpos - 250, self.pypos - 150)
+        turtle.write(self.name, font=("Arial", 16, "normal"))
 
     def pushdisk(self, disk):
         # using turtle to push a disk
         turtle.penup()
+        disk.newpos(self.pxpos, self.toppos)
+        disk.showdisk()
+        self.stack.append(disk)
+        self.toppos += disk.height
+
 
     def popdisk(self):
         # using turtle to pop a disk
         turtle.penup()
-
+        disk = self.stack.pop()
+        disk.cleardisk()
+        self.toppos -= disk.height
+        return disk
 
 class Hanoi(object):
     def __init__(self, n=3, start="A", workspace="B", destination="C"):
