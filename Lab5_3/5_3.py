@@ -1,9 +1,4 @@
 import turtle
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
-from PySide6.QtWidgets import QWidget
-
 
 class Disk(object):
     def __init__(self, name="", xpos=0, ypos=0, height=20, width=40):
