@@ -111,3 +111,4 @@ class Hanoi(object):
 
 h = Hanoi()
 h.solve()
+turtle.done()
